@@ -2556,9 +2556,9 @@ fn f_bipedUI =
 				--g_LBTools_BH.BH_pos = execute(getIniSetting g_LBTools_BH.bhINIfile "Floater" "Position")
 				g_LBTools_BH.bipedUI_Floater.pos = g_LBTools_BH.BH_pos
 				addRollout g_LBTools_BH.SelectDisplayKeys_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
-				addRollout g_LBTools_BH.LimbSpaces_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
+				addRollout g_LBTools_BH.LimbSpaces_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
 				addRollout g_LBTools_BH.Reference_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
-				addRollout g_LBTools_BH.QuickPosture_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
+				addRollout g_LBTools_BH.QuickPosture_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.PoseGrabber_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.Baking_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.About_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
