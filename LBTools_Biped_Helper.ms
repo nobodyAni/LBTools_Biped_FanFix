@@ -836,14 +836,67 @@ fn f_bipedBakeRoot =
 	animate off()
 	delete followHelper
 ),
-
+/*--------------------------------------*/
+--키프레임
+fn f_appendKeyArray base_array addobj_array = if addobj_array != undefined do
+(
+	for obj in addobj_array do
+	(
+	append base_array obj.time
+	)
+	base_array
+),
+fn f_getRootKeyArray =
+(
+	ctrl = g_LBTools_BH.bRoot.controller
+	key_array = #()
+	if (getClassName ctrl == "Body") do
+	(
+		vertKey_array = ctrl.vertical.controller.keys
+		horzKey_array = ctrl.horizontal.controller.keys
+		turnKey_array = ctrl.turning.controller.keys
+		g_LBTools_BH.f_appendKeyArray key_array vertKey_array
+		g_LBTools_BH.f_appendKeyArray key_array horzKey_array
+		g_LBTools_BH.f_appendKeyArray key_array turnKey_array
+		sort key_array
+	)
+	key_array
+),
+fn f_nextComKeyFrame =
+(
+	local isReturn = sliderTime
+	key_array = g_LBTools_BH.f_getRootKeyArray()
+	for i = 1 to key_array.count do
+	(
+		nextkey = sliderTime	
+		if key_array[i+1] != undefined do nextkey = key_array[i+1]
+		if (sliderTime >= key_array[i] and sliderTime < nextkey ) do
+		(
+			isReturn = nextkey
+		)
+	)
+	sliderTime = isReturn
+),
+fn f_previousComKeyFrame =
+(
+	local isReturn = sliderTime
+	key_array = g_LBTools_BH.f_getRootKeyArray()
+	for i = 1 to key_array.count do
+	(
+		nextkey = sliderTime
+		if key_array[i+1] != undefined do nextkey = key_array[i+1]
+		--format "sliderTime : % \n previusTime: % \n nextTime : % \n" (sliderTime as string) (key_array[i] as string) (nextkey as string)
+		if (sliderTime > key_array[i] and sliderTime <= nextkey ) do
+		(
+			isReturn = key_array[i]
+		)
+	)
+	sliderTime = isReturn
+),
 /*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 fn f_bipedUI =
 (	
-	fn f_dotNetBtn dotNetBtn valueName width:45 height:20 = (
-		dotNetBtn_selectRoot.text = valueName
-	)
 	rollout SelectDisplayKeys_Rollout "Selection / Display / Keys"
 	(
 		button btn_selectAll "Sel All" align:#center across:3 width:45  height:20 tooltip:"Select all Biped parts" --images:#(imageFile1, undefined, 1, 1, 1, 1, 1)
@@ -852,12 +905,6 @@ fn f_bipedUI =
 		group "Selection"
 		(
 			label lbl_txt1 "Add: Shift/Control - Sub: Alt" align:#center
-			--images: #(<image>, <maskImage>, <count_integer>, <enabled_out_image_index>, <enabled_in_image_index>, <disabled_out_image_index>, <disabled_in_image_index>, <invert_boolean>, <colortheme_boolean>)
-			-- button btn_selectAll "Select All" align:#center width:160 height:20 tooltip:"Select all Biped parts" images:#(imageFile1, undefined, 1, 1, 1, 1, 1)
-			--dotNetBtn_selectRoot = f_dotNetBtn dotNetBtn_selectRoot width:45 height:20
-			dotNetControl dotNetBtn_selectRoot "System.Windows.Forms.Button" --width:45 height:20
-			--dotNetBtn_selectRoot.text ="11"
-			dotNetBtn_selectRoot.size = dotNetObject "System.Drawing.Size" 160 20
 			button btn_selectRoot "Root" align:#center across:3 width:45 height:20 tooltip:"Select the root bone (Bip01 or Bip001)"
 			button btn_selectHead "Head" align:#center width:45 height:20 tooltip:"Select the head bone"
 			button btn_selectNeck "Neck" align:#center width:45 height:20 tooltip:"Select the eck bone"
@@ -889,11 +936,14 @@ fn f_bipedUI =
 		--)
 		group "Keys"
 		(
-			button btn_keyAll "Key All Biped Parts" width:160 height:20 align:#center tooltip:"Add new keys to ALL Biped parts at the current slider time" --images:#(imageFile19, undefined, 1, 1, 1, 1, 1)
-			button btn_keySelected "Key Selected Biped Parts" width:160 height:20 align:#center tooltip:"Add new keys to SELECTED Biped parts at the current slider time" --images:#(imageFile33, undefined, 1, 1, 1, 1, 1)
+			label  lbl_ComKey "Com 기준" across:3
+			button btn_previousComKeyFrame "이전키" width:40
+			button btn_nectComKeyFrame "다음키" width:40
+			--button btn_keyAll "Key All" width:80 height:20 align:#center tooltip:"Add new keys to ALL Biped parts at the current slider time" --images:#(imageFile19, undefined, 1, 1, 1, 1, 1)
+			button btn_keySelected "Key Selected" across:2 width:80 height:20 align:#center tooltip:"Add new keys to SELECTED Biped parts at the current slider time" --images:#(imageFile33, undefined, 1, 1, 1, 1, 1)
 			-- 2019-01-15 seo - 사용안함.
 			--button btn_deleteAllkeys "Delete All Biped Keys" width:160 height:20 align:#center tooltip:"Remove all keys on ALL Biped parts" images:#(imageFile20, undefined, 1, 1, 1, 1, 1)
-			button btn_deleteFrameKeys "Delete Frame Keys" width:160 height:20 align:#center tooltip:"Remove keys on SELECTED Biped parts at the current slider time. Alternatively, use SHIFT or CONTROL to remove keys on ALL Biped parts at the current slider time." --images:#(imageFile21, undefined, 1, 1, 1, 1, 1)
+			button btn_deleteFrameKeys "Delete Keys" width:80 height:20 align:#center tooltip:"Remove keys on SELECTED Biped parts at the current slider time. Alternatively, use SHIFT or CONTROL to remove keys on ALL Biped parts at the current slider time." --images:#(imageFile21, undefined, 1, 1, 1, 1, 1)
 			label lbl_TCB1 "==== TCB - Continuity ====" align:#center
 			label lbl_TCB2 "Apply to full range: Shift/Control" align:#center
 			button btn_TCBlinear "TCB Linear" across:2 align:#center width:80 height:20 tooltip:"Set keys at current slider time to 0 Continuity" --images:#(imageFile14, undefined, 2, 1, 1, 1, 1)
@@ -1549,7 +1599,15 @@ fn f_bipedUI =
 				)
 			)catch(g_LBTools_BH.f_initBipedParts())
 		)
-		
+		-- 키 Com
+		on btn_previousComKeyFrame pressed do 
+		(
+			g_LBTools_BH.f_previousComKeyFrame()
+		)
+		on btn_nectComKeyFrame pressed do
+		(
+			g_LBTools_BH.f_nextComKeyFrame()
+		)
 		on btn_keyAll pressed do
 		(
 			try
@@ -2498,10 +2556,10 @@ fn f_bipedUI =
 				--g_LBTools_BH.BH_pos = execute(getIniSetting g_LBTools_BH.bhINIfile "Floater" "Position")
 				g_LBTools_BH.bipedUI_Floater.pos = g_LBTools_BH.BH_pos
 				addRollout g_LBTools_BH.SelectDisplayKeys_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
-				addRollout g_LBTools_BH.QuickPosture_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
-				addRollout g_LBTools_BH.PoseGrabber_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.LimbSpaces_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.Reference_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
+				addRollout g_LBTools_BH.QuickPosture_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
+				addRollout g_LBTools_BH.PoseGrabber_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.Baking_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 				addRollout g_LBTools_BH.About_Rollout g_LBTools_BH.bipedUI_Floater rolledup:true
 			)
@@ -2515,8 +2573,22 @@ fn f_bipedUI =
 	)
 	
 	g_LBTools_BH.f_openBipedUI()
-) --// end function
+), --// end function
+fn f_bipedDotNetUI =
+(
+	fn f_dotNetBtn dotNetBtn valueName width:45 height:20 = (
+		dotNetBtn_selectRoot.text = valueName
+	)
+	mainForm_dotNetObj = dotNetObject "System.Windows.Forms.Form"
+	
+	dotNetBtn_selectRoot = dotNetObject "System.Windows.Forms.Button"
+	dotNetBtn_selectRoot.text ="Root"
+	mainForm_dotNetObj.controls.add dotNetBtn_selectRoot
+	
+	mainForm_dotNetObj.topmost = true
+	mainForm_dotNetObj.show()
 
+)
 ) --// end struct
 
 g_LBTools_BH = s_LBTools_bipedHelper()
