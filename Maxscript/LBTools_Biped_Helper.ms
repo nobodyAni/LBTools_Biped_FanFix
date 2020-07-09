@@ -1,73 +1,74 @@
-/**************************************************************************************************************************
-// This script was authored by Lorne Brooks, Email: lbtools2k@gmail.com
-//
-//
-// REVISION HISTORY:
-// Version 2.5 19/08/07 : Va29 기능 버튼 추가
-// Version 2.5 19/08/05 : 
-// 						- 발본 수평으로 조정하는 버튼 추가
-// Version 2.5 19/03/22 :
-						-- 마우스 위치에서 생성되게 수정
-// Version 2.5 18/02/25 :
-						-- 메세지 경고창 단순 출력으로 변경
-// Version 2.5 18/02/20 :
-						-- 우클릭으로 모든 오브젝트 선택
-// Version 2.4 18/02/19 :
-						- prob에 키들어가게
-// Version 2.4 13/02/19 : plaied45
-//						- 선택메뉴 추가
-// Version 2.3 28/06/17:
-//						- Fixed a bug where paste posture would crash due to missing posture in the collection. It now filters the selection for
-//						Biped only parts during the copy posture phase, so that the collection is created properly for pasting.
-//						- UI now remembers it's last location, even after Max restart.
-// Version 2.2 23/11/16:
-//						- Added the ability to copy and paste (with optional opposite) a posture based on a selection of biped parts. The copied
-//						  posture is saved as a file for later retrieval. You can also quickly select the copied biped parts if available.
-// Version 2.1 19/11/16:
-//						- Added a new rollout called Quick Posture, with options to mirror limbs, and straighten or untwist spine links.
-// Version 2.0 06/02/16:
-//						- Added a new button "Key Selected Biped Parts". Adds keys to all selected biped parts at the current slider time.
-// Version 1.9 08/11/15:
-//						- Bake Animation Keys now refreshes the UI in the case of the root being a <deleted scene node>.
-//						- Trajectories Toggle now force switches to the motion panel before toggling the trajectories mode.
-//						- Baking up to next and last modes now allows any part of a limb to be selected, not just the hands or feet.
-//						- Added options to enable a single pose to be grabbed then applied without using the Biped collections panel. It saves the pose to a file for storage.
-//						- Delete Frame Keys can now remove keys on all Biped parts at the current slider time, by holding Shift or Control when clicking the button.
-//						- Added a select Both Hands & Feet button to the Selection/Display/Keys rollout.
-//						- Updated PDF guide.
-// Version 1.8 06/11/15;
-//						- Fixed global variable usage which caused the functions key all and delete all keys to not work (finally).
-//						- Changed interface references of IK to be Body/Object space instead, to more accurately reflect their purpose.
-//						- Added a Delete Frame Keys button, which deletes all keys on selected Biped parts based on the slider time.
-//						- Added new button images, tooltips and rearranged some UI elements.
-//						- Improved code for baking animation keys.
-//						- Added a PDF guide and button link to the UI (in the About rollout).
-//						- The previous dialog version of this tool is no longer supported. "Compact" reference removed.
-// Version 1.7 01/07/15;
-//						- Converted the dialog interface into a more compact floater with collaspable rollouts.
-//						- Added functionality to enable user specified snapshots scene layer.
-// Version 1.6 17/12/14;
-//						- Fixed global variable usage which caused the functions key all and delete all keys to not work.
-// Version 1.5 09/12/14;
-//						- While using the Shift or Control method for setting TCB linear or smooth values across the time range, if the
-//							Escape key is pressed the operation will now stop.
-// Version 1.4 27/10/14;
-//						- Email change for help contact.
-// Version 1.3 13/10/14;
-//						- When selecting from the dropdown list of multiple Bipeds, you can now hold Shift to also select the Biped root
-//							or hold Control to select the whole rig.
-// Version 1.2 22/09/14;
-//						- Fixed the snapshot functionality. Do longer selects anything which means it works for frozen objects in Max 2015.
-//							Also, now handles multiple skin meshes in the Mesh Character layer. Only Skin meshes are snapshot.
-// Version 1.1 17/09/14;
-//						- Added a dropdown list to enable selection of a Biped for the panel to operate on in the case of multiple Bipeds.
-// Version 1.0 15/09/14;
-//						- First public release.
-//
-//
-// This script is not copyrighted, please feel free to modify or distribute.
-//
-**************************************************************************************************************************/
+--/**************************************************************************************************************************
+-- This script was authored by Lorne Brooks, Email: lbtools2k@gmail.com
+--
+--
+-- REVISION HISTORY:
+g_LBTools_BH_Version = "2.6 20/07/10 : Va30 주석 조정"
+-- Version 2.5 19/08/07 : Va29 기능 버튼 추가
+-- Version 2.5 19/08/05 : 
+-- 						- 발본 수평으로 조정하는 버튼 추가
+-- Version 2.5 19/03/22 :
+--				-- 마우스 위치에서 생성되게 수정
+-- Version 2.5 18/02/25 :
+--				-- 메세지 경고창 단순 출력으로 변경
+-- Version 2.5 18/02/20 :
+--				-- 우클릭으로 모든 오브젝트 선택
+-- Version 2.4 18/02/19 :
+--				- prob에 키들어가게
+-- Version 2.4 13/02/19 : plaied45
+--						- 선택메뉴 추가
+-- Version 2.3 28/06/17:
+--						- Fixed a bug where paste posture would crash due to missing posture in the collection. It now filters the selection for
+--						Biped only parts during the copy posture phase, so that the collection is created properly for pasting.
+--						- UI now remembers it's last location, even after Max restart.
+-- Version 2.2 23/11/16:
+--						- Added the ability to copy and paste (with optional opposite) a posture based on a selection of biped parts. The copied
+--						  posture is saved as a file for later retrieval. You can also quickly select the copied biped parts if available.
+-- Version 2.1 19/11/16:
+--						- Added a new rollout called Quick Posture, with options to mirror limbs, and straighten or untwist spine links.
+-- Version 2.0 06/02/16:
+--						- Added a new button "Key Selected Biped Parts". Adds keys to all selected biped parts at the current slider time.
+-- Version 1.9 08/11/15:
+--						- Bake Animation Keys now refreshes the UI in the case of the root being a <deleted scene node>.
+--						- Trajectories Toggle now force switches to the motion panel before toggling the trajectories mode.
+--						- Baking up to next and last modes now allows any part of a limb to be selected, not just the hands or feet.
+--						- Added options to enable a single pose to be grabbed then applied without using the Biped collections panel. It saves the pose to a file for storage.
+--						- Delete Frame Keys can now remove keys on all Biped parts at the current slider time, by holding Shift or Control when clicking the button.
+--						- Added a select Both Hands & Feet button to the Selection/Display/Keys rollout.
+--						- Updated PDF guide.
+-- Version 1.8 06/11/15;
+--						- Fixed global variable usage which caused the functions key all and delete all keys to not work (finally).
+--						- Changed interface references of IK to be Body/Object space instead, to more accurately reflect their purpose.
+--						- Added a Delete Frame Keys button, which deletes all keys on selected Biped parts based on the slider time.
+--						- Added new button images, tooltips and rearranged some UI elements.
+--						- Improved code for baking animation keys.
+--						- Added a PDF guide and button link to the UI (in the About rollout).
+--						- The previous dialog version of this tool is no longer supported. "Compact" reference removed.
+-- Version 1.7 01/07/15;
+--						- Converted the dialog interface into a more compact floater with collaspable rollouts.
+--						- Added functionality to enable user specified snapshots scene layer.
+-- Version 1.6 17/12/14;
+--						- Fixed global variable usage which caused the functions key all and delete all keys to not work.
+-- Version 1.5 09/12/14;
+--						- While using the Shift or Control method for setting TCB linear or smooth values across the time range, if the
+--							Escape key is pressed the operation will now stop.
+-- Version 1.4 27/10/14;
+--						- Email change for help contact.
+-- Version 1.3 13/10/14;
+--						- When selecting from the dropdown list of multiple Bipeds, you can now hold Shift to also select the Biped root
+--							or hold Control to select the whole rig.
+-- Version 1.2 22/09/14;
+--						- Fixed the snapshot functionality. Do longer selects anything which means it works for frozen objects in Max 2015.
+--							Also, now handles multiple skin meshes in the Mesh Character layer. Only Skin meshes are snapshot.
+-- Version 1.1 17/09/14;
+--						- Added a dropdown list to enable selection of a Biped for the panel to operate on in the case of multiple Bipeds.
+-- Version 1.0 15/09/14;
+--						- First public release.
+--
+--
+-- This script is not copyrighted, please feel free to modify or distribute.
+--
+--**************************************************************************************************************************/
 
 global g_LBTools_BH
 
@@ -2522,7 +2523,7 @@ fn f_bipedUI =
 		label lbl_author "Author - Lorne Brooks"
 		hyperLink myEmail "lbtools2k@gmail.com" across:2 align:#center offset:[30,10] color:(color 0 0 255) hovercolor:(color 0 0 190) visitedcolor:(color 190 0 0) align:#center address:"mailto:lbtools2k@gmail.com"
 		button btn_pdf "" align:#right offset:[-10,0] --images:#(imagePDF, undefined, 1, 1, 1, 1, 1, false) tooltip:"Opens a PDF explaining the tool features."
-		label lbl_version "Version 2.3 - 28 Jun 2017"
+		label lbl_version g_LBTools_BH_Version
 		
 		on btn_pdf pressed do
 		(
@@ -2552,7 +2553,7 @@ fn f_bipedUI =
 			(
 				--// Floater definition
 				try(closeRolloutFloater g_LBTools_BH.bipedUI_Floater)catch()
-				g_LBTools_BH.bipedUI_Floater = newRolloutFloater "Biped Helper" 205 700
+				g_LBTools_BH.bipedUI_Floater = newRolloutFloater ("Biped Helper") 225 700
 				--g_LBTools_BH.BH_pos = execute(getIniSetting g_LBTools_BH.bhINIfile "Floater" "Position")
 				g_LBTools_BH.bipedUI_Floater.pos = g_LBTools_BH.BH_pos
 				addRollout g_LBTools_BH.SelectDisplayKeys_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
@@ -2573,22 +2574,7 @@ fn f_bipedUI =
 	)
 	
 	g_LBTools_BH.f_openBipedUI()
-), --// end function
-fn f_bipedDotNetUI =
-(
-	fn f_dotNetBtn dotNetBtn valueName width:45 height:20 = (
-		dotNetBtn_selectRoot.text = valueName
-	)
-	mainForm_dotNetObj = dotNetObject "System.Windows.Forms.Form"
-	
-	dotNetBtn_selectRoot = dotNetObject "System.Windows.Forms.Button"
-	dotNetBtn_selectRoot.text ="Root"
-	mainForm_dotNetObj.controls.add dotNetBtn_selectRoot
-	
-	mainForm_dotNetObj.topmost = true
-	mainForm_dotNetObj.show()
-
-)
+) --// end function
 ) --// end struct
 
 g_LBTools_BH = s_LBTools_bipedHelper()
