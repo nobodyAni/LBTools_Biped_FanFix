@@ -3,7 +3,6 @@
 --
 --
 -- REVISION HISTORY:
-g_LBTools_BH_Version = "2.6 20/07/10 : Va30 주석 조정"
 -- Version 2.5 19/08/07 : Va29 기능 버튼 추가
 -- Version 2.5 19/08/05 : 
 -- 						- 발본 수평으로 조정하는 버튼 추가
@@ -106,43 +105,6 @@ a_bipedLimbs = #(),
 a_bipedAllParts = #(),
 a_bipedProps = #(),
 a_bipedAddBones = #(),
--- imageFile1 = (getDir #userIcons) + "\BipedHelper_Image1.bmp",
--- imageFile2 = (getDir #userIcons) + "\BipedHelper_Image2.bmp",
--- imageFile3 = (getDir #userIcons) + "\BipedHelper_Image3.bmp",
--- imageFile4 = (getDir #userIcons) + "\BipedHelper_Image4.bmp",
--- imageFile5 = (getDir #userIcons) + "\BipedHelper_Image5.bmp",
--- imageFile6 = (getDir #userIcons) + "\BipedHelper_Image6.bmp",
--- imageFile7 = (getDir #userIcons) + "\BipedHelper_Image7.bmp",
--- imageFile8 = (getDir #userIcons) + "\BipedHelper_Image8.bmp",
--- imageFile9 = (getDir #userIcons) + "\BipedHelper_Image9.bmp",
--- imageFile10 = (getDir #userIcons) + "\BipedHelper_Image10.bmp",
--- imageFile11 = (getDir #userIcons) + "\BipedHelper_Image11.bmp",
--- imageFile12 = (getDir #userIcons) + "\BipedHelper_Image12.bmp",
--- imageFile13 = (getDir #userIcons) + "\BipedHelper_Image13.bmp",
--- imageFile14 = (getDir #userIcons) + "\BipedHelper_Image14.bmp",
--- imageFile15 = (getDir #userIcons) + "\BipedHelper_Image15.bmp",
--- imageFile16 = (getDir #userIcons) + "\BipedHelper_Image16.bmp",
--- imageFile17 = (getDir #userIcons) + "\BipedHelper_Image17.bmp",
--- imageFile18 = (getDir #userIcons) + "\BipedHelper_Image18.bmp",
--- imageFile19 = (getDir #userIcons) + "\BipedHelper_Image19.bmp",
--- imageFile20 = (getDir #userIcons) + "\BipedHelper_Image20.bmp",
--- imageFile21 = (getDir #userIcons) + "\BipedHelper_Image21.bmp",
--- imageFile22 = (getDir #userIcons) + "\BipedHelper_Image22.bmp",
--- imageFile23 = (getDir #userIcons) + "\BipedHelper_Image23.bmp",
--- imageFile24 = (getDir #userIcons) + "\BipedHelper_Image24.bmp",
--- imageFile25 = (getDir #userIcons) + "\BipedHelper_Image25.bmp",
--- imageFile26 = (getDir #userIcons) + "\BipedHelper_Image26.bmp",
--- imageFile27 = (getDir #userIcons) + "\BipedHelper_Image27.bmp",
--- imageFile28 = (getDir #userIcons) + "\BipedHelper_Image28.bmp",
--- imageFile29 = (getDir #userIcons) + "\BipedHelper_Image29.bmp",
--- imageFile30 = (getDir #userIcons) + "\BipedHelper_Image30.bmp",
--- imageFile31 = (getDir #userIcons) + "\BipedHelper_Image31.bmp",
--- imageFile32 = (getDir #userIcons) + "\BipedHelper_Image32.bmp",
--- imageFile33 = (getDir #userIcons) + "\BipedHelper_Image33.bmp",
--- imageFile34 = (getDir #userIcons) + "\BipedHelper_Image34.bmp",
--- imageFile35 = (getDir #userIcons) + "\BipedHelper_Image35.bmp",
--- imageFile36 = (getDir #userIcons) + "\BipedHelper_Image36.bmp",
--- imageFile37 = (getDir #userIcons) + "\BipedHelper_Image37.bmp",
 
 /*==================================================================================
 // Structure functions
@@ -912,20 +874,23 @@ fn f_bipedUI =
 			button btn_selectSpine1 "S1" align:#center across:3 width:40 height:20 tooltip:"Select the second spine1 link" 
 			button btn_selectSpine2 "S2" align:#center width:40 height:20 tooltip:"Select the second spine2 link" 
 			button btn_selectSpine3 "S3" align:#center width:40 height:20 tooltip:"Select the second spine3 link" 
-			button btn_selectLHand "Left Hand" across:2 align:#center width:80 height:20 tooltip:"Select the left hand bone" --images:#(imageFile4, undefined, 2, 1, 1, 1, 1)
-			button btn_selectRHand "Right Hand" align:#center width:80 height:20 tooltip:"Select the right hand bone" --images:#(imageFile4, undefined, 2, 2, 2, 1, 1)
-			button btn_selectLClavicle "Cla" across:6 align:#center width:25 height:20 tooltip:"Select the left hand bone" 
-			button btn_selectLUpperArm "Upp" align:#center width:25 height:20 tooltip:"Select the left hand bone" 
-			button btn_selectLForeArm "Arm" align:#center width:25 height:20 tooltip:"Select the left hand bone" 
-			button btn_selectRClavicle "Cla" align:#center width:25 height:20 tooltip:"Select the right hand bone" 
+
+			button btn_selectRHand "Right Hand" across:2 align:#center width:80 height:20 tooltip:"Select the right hand bone" --images:#(imageFile4, undefined, 2, 2, 2, 1, 1)
+			button btn_selectLHand "Left Hand"  align:#center width:80 height:20 tooltip:"Select the left hand bone" --images:#(imageFile4, undefined, 2, 1, 1, 1, 1)
+			button btn_selectRClavicle "Cla" across:6 align:#center width:25 height:20 tooltip:"Select the right hand bone" 
 			button btn_selectRUpperArm "Upp" align:#center width:25 height:20 tooltip:"Select the right hand bone" 
 			button btn_selectRForeArm "Arm" align:#center width:25 height:20 tooltip:"Select the right hand bone" 
-			button btn_selectLFoot "Left Foot" across:2 align:#center width:80 height:20 offset:[0,0] tooltip:"Select the left foot bone" --images:#(imageFile3, undefined, 2, 1, 1, 1, 1)
-			button btn_selectRFoot "Right Foot" align:#center width:80 height:20 tooltip:"Select the right foot bone" --images:#(imageFile3, undefined, 2, 2, 2, 1, 1)
-			button btn_selectLThigh "Thigh" across:4 align:#center width:40 height:20 tooltip:"Select the left foot bone"
-			button btn_selectLCalf "Calf" align:#center width:40 height:20 tooltip:"Select the left foot bone"
-			button btn_selectRThigh "Thigh" align:#center width:40 height:20 tooltip:"Select the right foot bone"
+			button btn_selectLClavicle "Cla"  align:#center width:25 height:20 tooltip:"Select the left hand bone" 
+			button btn_selectLUpperArm "Upp" align:#center width:25 height:20 tooltip:"Select the left hand bone" 
+			button btn_selectLForeArm "Arm" align:#center width:25 height:20 tooltip:"Select the left hand bone" 
+
+			button btn_selectRFoot "Right Foot" across:2 align:#center width:80 height:20 tooltip:"Select the right foot bone" --images:#(imageFile3, undefined, 2, 2, 2, 1, 1)
+			button btn_selectLFoot "Left Foot" align:#center width:80 height:20 offset:[0,0] tooltip:"Select the left foot bone" --images:#(imageFile3, undefined, 2, 1, 1, 1, 1)
+			button btn_selectRThigh "Thigh" across:4 align:#center width:40 height:20 tooltip:"Select the right foot bone"
 			button btn_selectRCalf "Calf" align:#center width:40 height:20 tooltip:"Select the right foot bone"
+			button btn_selectLThigh "Thigh" align:#center width:40 height:20 tooltip:"Select the left foot bone"
+			button btn_selectLCalf "Calf" align:#center width:40 height:20 tooltip:"Select the left foot bone"
+
 			button btn_selectHandsFeet "Both Hands & Feet" align:#center width:160 height:20 tooltip:"Select all hand and foot bones" --images:#(imageFile32, undefined, 1, 1, 1, 1, 1)
 		)
 		-- 2019-01-15 seo - 단축키 사용으로 숨김
@@ -2523,7 +2488,7 @@ fn f_bipedUI =
 		label lbl_author "Author - Lorne Brooks"
 		hyperLink myEmail "lbtools2k@gmail.com" across:2 align:#center offset:[30,10] color:(color 0 0 255) hovercolor:(color 0 0 190) visitedcolor:(color 190 0 0) align:#center address:"mailto:lbtools2k@gmail.com"
 		button btn_pdf "" align:#right offset:[-10,0] --images:#(imagePDF, undefined, 1, 1, 1, 1, 1, false) tooltip:"Opens a PDF explaining the tool features."
-		label lbl_version g_LBTools_BH_Version
+		label lbl_version "Version 2.3 - 28 Jun 2017"
 		
 		on btn_pdf pressed do
 		(
@@ -2553,7 +2518,7 @@ fn f_bipedUI =
 			(
 				--// Floater definition
 				try(closeRolloutFloater g_LBTools_BH.bipedUI_Floater)catch()
-				g_LBTools_BH.bipedUI_Floater = newRolloutFloater ("Biped Helper") 225 700
+				g_LBTools_BH.bipedUI_Floater = newRolloutFloater "Biped Helper" 205 700
 				--g_LBTools_BH.BH_pos = execute(getIniSetting g_LBTools_BH.bhINIfile "Floater" "Position")
 				g_LBTools_BH.bipedUI_Floater.pos = g_LBTools_BH.BH_pos
 				addRollout g_LBTools_BH.SelectDisplayKeys_Rollout g_LBTools_BH.bipedUI_Floater rolledup:false
@@ -2574,7 +2539,22 @@ fn f_bipedUI =
 	)
 	
 	g_LBTools_BH.f_openBipedUI()
-) --// end function
+), --// end function
+fn f_bipedDotNetUI =
+(
+	fn f_dotNetBtn dotNetBtn valueName width:45 height:20 = (
+		dotNetBtn_selectRoot.text = valueName
+	)
+	mainForm_dotNetObj = dotNetObject "System.Windows.Forms.Form"
+	
+	dotNetBtn_selectRoot = dotNetObject "System.Windows.Forms.Button"
+	dotNetBtn_selectRoot.text ="Root"
+	mainForm_dotNetObj.controls.add dotNetBtn_selectRoot
+	
+	mainForm_dotNetObj.topmost = true
+	mainForm_dotNetObj.show()
+
+)
 ) --// end struct
 
 g_LBTools_BH = s_LBTools_bipedHelper()
